@@ -20,6 +20,7 @@
     "bootstrap-css": "^3.0.0",
     "css-loader": "^0.23.1",
     "isomorphic-fetch": "^2.2.1",
+    "jQuery": "^1.7.4",
     "less": "^2.6.0",
     "less-loader": "^2.2.2",
     "lodash": "^4.5.1",
