@@ -17,6 +17,8 @@ export default class RequestMessage extends Component{
             method:"Get"
         }
     }
+
+
 	render(){
 		var {changeMethod,changeUrl,changeGridData,onSend}=this.props;
 		return (<div className="requestmessage">

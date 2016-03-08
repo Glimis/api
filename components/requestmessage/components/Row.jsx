@@ -6,7 +6,8 @@ import Col from './Col'
 export default class Row extends React.Component {
     
     render() {
-        return <tr className="active" >{this.getChildren()}</tr>;
+        var {className}=this.props;
+        return <tr className={className} >{this.getChildren()}</tr>;
     }
     getChildren(){
         var {data}=this.props;

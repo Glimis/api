@@ -14,12 +14,29 @@ export default class Grid extends React.Component {
     render() {
         return <table className="table table-hover"><tbody>{this.getChildren()}</tbody></table>
     }
+    getDangerParam(dataSet){
+        //重复属性,临时属性
+        var danger={},temp={};
+       for(var data of dataSet){
+            if(!temp[data[0]]){
+                temp[data[0]]=1;
+            }else{
+                danger[data[0]]=1;
+            }
+       }
+       return danger;
+    }
     getChildren(){
         var {data}=this.state;
+         var danger=this.getDangerParam(data);
         var html=[];
         var changeGridData=this.changeGridData.bind(this);
         data.forEach(function(data,index){
-             html.push(<Row changeGridData={changeGridData} data={data} row={index}  key={index} ></Row>)
+            let className='active'
+             if(danger[data[0]]==1){
+                className='danger'
+             }
+             html.push(<Row className={className} changeGridData={changeGridData} data={data} row={index}  key={index} ></Row>)
         })
         return html;
     }

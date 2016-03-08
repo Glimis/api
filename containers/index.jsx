@@ -1,3 +1,5 @@
+import '../less/index.less'
+
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -9,9 +11,11 @@ import * as Action from '../actions'
  class JsonParse extends React.Component {
     render() {
         var {afterGetData,json}=this.props;
-        return (<div>
-            <Requestmessage afterGetData={afterGetData} ></Requestmessage>
-   			    <Jsonformat  json={json}></Jsonformat>
+        return (<div className="container">
+            <Requestmessage  afterGetData={afterGetData} ></Requestmessage>
+            <div className="righttree">
+   			      <Jsonformat   json={json}></Jsonformat>
+            </div>
    		</div>)
         
     }
