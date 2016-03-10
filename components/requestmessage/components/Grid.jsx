@@ -5,13 +5,13 @@ import Row from './Row'
 export default class Grid extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
-            data:this.props.data
-        }
     }
 
 
     render() {
+        this.state={
+            data:this.props.data
+        }
         return <table className="table table-hover"><tbody>{this.getChildren()}</tbody></table>
     }
     getDangerParam(dataSet){

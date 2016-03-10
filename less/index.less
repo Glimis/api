@@ -1,13 +1,46 @@
-.content{
-	border: 1px solid black;
+html{
+	height: 100%;
+	body{
+		height: 100%;
+	}
 }
 
+#body{
+	height: 100%;
+	.border{
+		height: 100%;
+		.row{
+			height: 100%;
+			>div{
+				height: 100%;
+			}
+		}
+	}
+}
+
+//左侧导航
+.projectsWrap{
+	height:100%;
+}
+
+//中部消息
+.requestmessageWrap{
+	height: 100%;
+	padding-bottom:320px;
+}
+
+//中部控制台
+.console{
+	margin-top: -310px;
+	height: 300px;
+}
+
+//右侧树
 .righttree{
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  width: 500px;
+  overflow: scroll;
+  width: '100%';
   background: #2A2F3A;
+  height:100%;
   //属性
   .content{
 	  .key{

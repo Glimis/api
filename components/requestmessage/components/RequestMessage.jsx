@@ -14,21 +14,51 @@ export default class RequestMessage extends Component{
         super(props);
         this.state={
             data:[['','']],
-            method:"Get"
+            method:"Get",
+            headers:[['Content-Type','application/x-www-form-urlencoded'],['Accept','text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8']],
+            tableState:'body'
         }
     }
 
 
 	render(){
+		
 		var {changeMethod,changeUrl,changeGridData,onSend}=this.props;
-		return (<div className="requestmessage">
-					<UrlEdit ref='UrlEdit' changeMethod={changeMethod.bind(this)} onSend={onSend.bind(this)} method={this.state.method} ></UrlEdit>
-   					<Grid data={this.state.data}></Grid>
+		var {data,headers,method,tableState}=this.state;
+
+		return (<div className="requestmessageWrap">
+					<div className="requestmessage">
+					<UrlEdit ref='UrlEdit' changeMethod={changeMethod.bind(this)} onSend={onSend.bind(this)} method={method} ></UrlEdit>
+   							<div className="btn-group" role="group" aria-label="...">
+							  <button onClick={()=>{
+							  		this.setState({
+							  			tableState:'body'
+							  		})
+							  }} type="button" className={tableState=='body'?'btn btn-info':'btn btn-default'}>body</button>
+							  <button onClick={()=>{
+							  		this.setState({
+							  			tableState:'headers'
+							  		})
+							  }} type="button" className={tableState=='headers'?'btn btn-info':'btn btn-default'}>headers</button>
+							</div>
+   					<Grid data={tableState=='body'?data:headers}></Grid>
+   					</div>
 				</div>)
 	}
 
 }
 
+
+function getObjectFromArray(dataSet){
+	var body={}
+	for(var i=0;i<dataSet.length;i++){
+		var dt=dataSet[i];
+		if(dt[0]){
+			body[dt[0]]=dt[1];
+		}
+	}
+	return body;
+}
 
 RequestMessage.defaultProps={
 				afterGetError:function(e){
@@ -37,28 +67,28 @@ RequestMessage.defaultProps={
 				afterGetData:function(){
 					console.log('afterGetData')
 				},
+				afterGetResponse:function(){
+
+				},
 				onSend:function(){
-					var {afterGetError,afterGetData}=this.props;
-					var body={};
-					for(var i=0;i<this.state.data.length;i++){
-						var dt=this.state.data[i];
-						if(dt[0]){
-							body[dt[0]]=dt[1];
-						}
-					}
+					var {afterGetError,afterGetData,afterGetResponse}=this.props;
+					var body=getObjectFromArray(this.state.data),
+						headers=getObjectFromArray(this.state.headers);
+					var url=this.refs.UrlEdit.refs.url.value;
 					var params={
-						url:this.refs.UrlEdit.refs.url.value,
 						method:this.state.method,
-						body:body
+						body:this.state.method.toLocaleLowerCase()==='POST'?JSON.stringify(body):undefined,
+						headers:headers
 					}
 					
 
-					fetch(params.url,{
-				 		method: params.method,
-						body:params.method.toLocaleLowerCase()==='POST'?JSON.stringify(params.body):undefined
-					})
+					fetch(url,params)
 					.then(function(response){
+							afterGetResponse(response);
 							response.json().then(function(data) {
+								response;
+								
+								debugger
       							afterGetData(data);
     						}, function(e) {
     							

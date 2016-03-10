@@ -1,19 +1,16 @@
-
-
 import React from 'react'
-import {createStore} from 'redux'
+
 import {render} from 'react-dom'
-import {Provider} from 'react-redux'
+import Projects from '../components/Projects'
 
-import Root from '../containers/JsonFormat'
-import indexStroe from '../stores/index'
 
-const store = indexStroe()
-
-render(
-	<Provider store={store}>
-   		<Root></Root>
-  	</Provider>,
+var a=[{
+	name:'教师',
+	children:[{
+		name:'所有学生'
+	}]
+}]
+render(<Projects data={a}></Projects>,
 	document.getElementById('body')
 )
 

@@ -1,1 +1,1 @@
-module.exports = require("./containers/JsonFormat");
+module.exports = require('./components/Projects');
